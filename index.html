@@ -1,13 +1,118 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>frontend</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Central de Serviços</title>
+    <style>
+        :root {
+            --bg: #ffffff;
+            --text: #6b6375;
+            --text-h: #08060d;
+            --border: #e5e4e7;
+            --accent: #aa3bff;
+            --accent-bg: rgba(170, 59, 255, 0.1);
+            --shadow: rgba(0, 0, 0, 0.1) 0 4px 6px -1px;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, sans-serif;
+            background-color: transparent; /* Permite herdar fundo do CRM */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .services-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            width: 100%;
+            max-width: 800px;
+            justify-content: center;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .service-card {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            flex: 1 1 200px;
+            max-width: 250px;
+            text-align: center;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .service-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+            box-shadow: var(--shadow);
+        }
+
+        .service-card h2 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: var(--text-h);
+        }
+
+        .service-card span {
+            display: block;
+            margin-top: 10px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        @media (max-width: 480px) {
+            .service-card {
+                flex: 1 1 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="services-grid" id="grid">
+        <!-- Cards serão gerados via JavaScript -->
+    </main>
+
+    <script>
+        // Captura o ID da URL
+        const params = new URLSearchParams(window.location.search);
+        const externalId = params.get('id') || '87370';
+
+        // Configuração dos links
+        const CARDS = [
+            { title: 'RBX', url: `https://www.xsl.com.br/app/wlan/web/resumo?id=${externalId}`, action: 'Acessar' },
+            { title: 'Nova Contratação', url: `https://www.xsl.com.br/app/wlan/admin/viabilidade?id=${externalId}`, action: 'Abrir' },
+            { title: 'Pacotes', url: `https://www.xsl.com.br/app/wlan/admin/pacotes?id=${externalId}`, action: 'Ver Planos' }
+        ];
+
+        // Renderiza os cards
+        const grid = document.getElementById('grid');
+        CARDS.forEach(card => {
+            const a = document.createElement('a');
+            a.className = 'service-card';
+            a.href = card.url;
+            a.target = '_blank';
+            a.innerHTML = `
+                <h2>${card.title}</h2>
+                <span>${card.action} →</span>
+            `;
+            grid.appendChild(a);
+        });
+    </script>
+</body>
 </html>
