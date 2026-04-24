@@ -5,7 +5,11 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "frame-ancestors *"
+          "value": "frame-ancestors * https://wlanfibra.matrixdobrasil.ai;"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
         }
       ]
     }
